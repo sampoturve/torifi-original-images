@@ -1,8 +1,3 @@
-// Standalone image page.
-javascript: (function() {
-  openOriginalSizeImagesFromCurrentPage();
-}());
-
 /**
  * Redirect an image URL to its "original" variant.
  */
