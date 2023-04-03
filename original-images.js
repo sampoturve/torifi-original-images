@@ -29,9 +29,8 @@ function openOriginalSizeImagesFromCurrentPage() {
     return true;
   }
 
-  // @todo Images in the "Big images" popup are in .ad_images_image > img.
   // Ad page thumbnails.
-  const thumbnails = document.getElementsByClassName('thumb');
+  const thumbnails = document.querySelectorAll('.thumb, .ad_images_image img');
   thumbnails.forEach(thumb => {
     const src = thumb.getAttribute('src');
     const originalImageUrl = getOriginalImageUrl(src);
