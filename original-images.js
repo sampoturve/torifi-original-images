@@ -1,30 +1,12 @@
 
 /**
- * Get url for the original size of the image, from any other size.
- */
-function getOriginalImageUrl(url) {
-  const matches = url.match(/rule=([^&]*)/);
-
-  if (matches[1] === 'original') {
-    alert('🦆 Image is already the original one.');
-    return null;
-  }
-
-  if (matches[1] && matches[1] !== 'original') {
-    return url.replace(matches[1], 'original');
-  }
-  return null;
-}
-
-/**
- * Open original sizes of all the ad images.
+ * Open original sizes of the ad images.
  */
 function openOriginalSizeImagesFromCurrentPage() {
   if (isStandaloneImagePage()) {
-    const standaloneImageUrl = window.location.href;
-    const originalImageUrl = getOriginalImageUrl(standaloneImageUrl);
+    const originalImageUrl = getOriginalImageUrl(window.location.href);
     if (originalImageUrl) {
-      window.open(originalImageUrl);
+      window.open(originalImageUrl, '_self');
     }
     return true;
   }
@@ -41,11 +23,28 @@ function openOriginalSizeImagesFromCurrentPage() {
 }
 
 /**
- * Check if the current page is a standalone one.
+ * Get url for the original size of the image, from any other size.
+ */
+function getOriginalImageUrl(url) {
+  const matches = url.match(/rule=([^&]*)/);
+
+  // Images must always have the rule parameter.
+  if (!matches[1]) {
+    alert('🦆 TOI: No rule parameter found.');
+  }
+
+  if (matches[1] === 'original') {
+    alert('🦆 TOI: Image is already the original one.');
+    return null;
+  }
+
+  return url.replace(matches[1], 'original');
+}
+
+/**
+ * Check if the current page is a standalone one (has the ?rule param).
  */
 function isStandaloneImagePage() {
-  // Check if the current URL has a `?rule` parameter
   const urlParams = new URLSearchParams(window.location.search);
-  const ruleParam = urlParams.get("rule");
-  return ruleParam !== null;
+  return urlParams.get('rule') !== null;
 }
